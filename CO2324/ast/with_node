@@ -1,0 +1,47 @@
+#ifndef __TIL_AST_WITH_NODE_H__
+#define __TIL_AST_WITH_NODE_H__
+
+#include <cdk/ast/expression_node.h>
+#include <cdk/ast/basic_node.h>
+
+namespace til {
+
+  /**
+   * Class for describing function call nodes.
+   */
+
+  class with_node: public cdk::basic_node {
+    cdk::expression_node *_low;
+    cdk::expression_node *_high;
+    cdk::expression_node *_vector;
+    cdk::expression_node *_function;
+
+
+  public:
+    inline function_call_node(int lineno, cdk::expression_node *low, cdk::expression_node *high, cdk::expression_node *vector, cdk::expression_node *function) :
+        cdk::basic_node(lineno), _low(low), _high(high), _vector(vector), _function(function) {
+    }
+
+  public:
+    inline cdk::expression_node *low() {
+      return _low;
+    }
+    inline cdk::expression_node *high() {
+      return _high;
+    }
+    inline cdk::expression_node *vector() {
+      return _vector;
+    }
+    inline cdk::expression_node *function() {
+      return _function;
+    }
+
+    void accept(basic_ast_visitor *sp, int level) {
+      sp->do_with_node(this, level);
+    }
+
+  };
+
+} // til
+
+#endif
